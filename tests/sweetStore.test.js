@@ -61,4 +61,24 @@ test("adds multiple sweets correctly", () => {
   expect(useSweetStore.getState().sweets).toHaveLength(2);
 
 });
+test("updates an existing sweet by ID", () => {
+  const store = useSweetStore.getState();
+
+  const sweet = {
+    id: 1,
+    name: "Kaju Katli",
+    category: "Nut-Based",
+    price: 50,
+    quantity: 20,
+  };
+
+  store.addSweet(sweet);
+
+  store.updateSweet(1, { price: 60, quantity: 25 });
+
+  const updated = useSweetStore.getState().sweets.find(s => s.id === 1);
+  expect(updated.price).toBe(60);
+  expect(updated.quantity).toBe(25);
+});
+
 });
