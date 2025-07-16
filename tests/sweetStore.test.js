@@ -37,4 +37,28 @@ describe("Sweet Store", () => {
 
   expect(() => store.addSweet(sweet)).toThrow("Sweet with this ID already exists");
 });
+test("throws error when adding a sweet with missing required fields", () => {
+  const sweet = {
+    id: 2,
+    category: "Candy",
+    price: 20,
+    quantity: 10,
+  };
+
+  const store = useSweetStore.getState();
+
+  expect(() => store.addSweet(sweet)).toThrow("Missing required fields");
+});
+test("adds multiple sweets correctly", () => {
+  const store = useSweetStore.getState();
+
+  const sweet1 = { id: 1, name: "Kaju Katli", category: "Nut", price: 50, quantity: 20 };
+  const sweet2 = { id: 2, name: "Rasgulla", category: "Milk", price: 30, quantity: 25 };
+
+  store.addSweet(sweet1);
+  store.addSweet(sweet2);
+
+  expect(useSweetStore.getState().sweets).toHaveLength(2);
+
+});
 });
