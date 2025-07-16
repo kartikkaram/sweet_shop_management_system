@@ -80,5 +80,10 @@ test("updates an existing sweet by ID", () => {
   expect(updated.price).toBe(60);
   expect(updated.quantity).toBe(25);
 });
+test("throws error when trying to update a non-existent sweet", () => {
+  const store = useSweetStore.getState();
 
+  expect(() => store.updateSweet(999, { price: 100 }))
+    .toThrow("Sweet not found");
+});
 });
