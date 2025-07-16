@@ -86,4 +86,22 @@ test("throws error when trying to update a non-existent sweet", () => {
   expect(() => store.updateSweet(999, { price: 100 }))
     .toThrow("Sweet not found");
 });
+test("does not change sweet when update object is empty", () => {
+  const store = useSweetStore.getState();
+
+  const sweet = {
+    id: 3,
+    name: "Ladoo",
+    category: "Gram-Based",
+    price: 25,
+    quantity: 10,
+  };
+
+  store.addSweet(sweet);
+  store.updateSweet(3, {});
+
+  const updatedSweet = useSweetStore.getState().sweets.find(sweet => sweet.id === 3);
+  expect(updatedSweet).toMatchObject(sweet);
+});
+
 });
