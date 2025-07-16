@@ -33,7 +33,11 @@ const useSweetStore = create((set, get) => ({
       ),
     }));
   },
-
+deleteSweet: (id) => {
+  set((state) => ({
+    sweets: state.sweets.filter((sweet) => sweet.id !== id),
+  }));
+},
   reset: () => set({ sweets: [] }),
 }));
 
