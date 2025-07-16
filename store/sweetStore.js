@@ -34,6 +34,9 @@ const useSweetStore = create((set, get) => ({
     }));
   },
 deleteSweet: (id) => {
+  const currentSweets = get().sweets;
+  const sweetExists = currentSweets.some((sweet) => sweet.id === id);
+  if (!sweetExists) throw new Error("Sweet not found");
   set((state) => ({
     sweets: state.sweets.filter((sweet) => sweet.id !== id),
   }));
