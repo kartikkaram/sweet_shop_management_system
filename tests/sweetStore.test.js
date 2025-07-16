@@ -174,5 +174,10 @@ test("can delete all sweets one by one", () => {
 
     expect(updatedSweet.quantity).toBe(15);
   });
+  test("throws error when restocking a non-existent sweet", () => {
+  const store = useSweetStore.getState();
+
+  expect(() => store.restockSweet(999, 10)).toThrow("Sweet not found");
+});
 
 });
