@@ -141,4 +141,19 @@ test("deletes the correct sweet when multiple sweets are present", () => {
   expect(sweets).toHaveLength(1);
   expect(sweets[0].id).toBe(2);
 });
+test("can delete all sweets one by one", () => {
+  const store = useSweetStore.getState();
+
+  const sweet1 = { id: 1, name: "Kalakand", category: "Milk", price: 40, quantity: 12 };
+  const sweet2 = { id: 2, name: "Imarti", category: "Fried", price: 20, quantity: 8 };
+
+  store.addSweet(sweet1);
+  store.addSweet(sweet2);
+
+  store.deleteSweet(1);
+  store.deleteSweet(2);
+
+  const sweets = useSweetStore.getState().sweets;
+  expect(sweets).toHaveLength(0);
+});
 });
