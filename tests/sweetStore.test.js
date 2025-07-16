@@ -103,5 +103,21 @@ test("does not change sweet when update object is empty", () => {
   const updatedSweet = useSweetStore.getState().sweets.find(sweet => sweet.id === 3);
   expect(updatedSweet).toMatchObject(sweet);
 });
+test("deletes a sweet by ID", () => {
+  const store = useSweetStore.getState();
 
+  const sweet = {
+    id: 10,
+    name: "Soan Papdi",
+    category: "Flaky",
+    price: 20,
+    quantity: 15,
+  };
+
+  store.addSweet(sweet);
+  store.deleteSweet(10);
+
+  const sweets = useSweetStore.getState().sweets;
+  expect(sweets.find((sweet) => sweet.id === 10)).toBeUndefined();
+});
 });
