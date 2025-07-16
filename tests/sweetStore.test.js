@@ -179,5 +179,22 @@ test("can delete all sweets one by one", () => {
 
   expect(() => store.restockSweet(999, 10)).toThrow("Sweet not found");
 });
+test("throws error when restocking with invalid amount", () => {
+  const store = useSweetStore.getState();
+
+  const sweet = {
+    id: 8,
+    name: "Cham Cham",
+    category: "Milk-Based",
+    price: 25,
+    quantity: 12,
+  };
+
+  store.addSweet(sweet);
+
+  expect(() => store.restockSweet(8, 0)).toThrow("Invalid restock amount");
+  expect(() => store.restockSweet(8, -5)).toThrow("Invalid restock amount");
+});
+
 
 });
