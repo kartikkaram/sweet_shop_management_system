@@ -126,5 +126,19 @@ test("throws error when trying to delete a non-existent sweet", () => {
   expect(() => store.deleteSweet(999))
     .toThrow("Sweet not found");
 });
+test("deletes the correct sweet when multiple sweets are present", () => {
+  const store = useSweetStore.getState();
 
+  const sweet1 = { id: 1, name: "Barfi", category: "Milk", price: 30, quantity: 10 };
+  const sweet2 = { id: 2, name: "Peda", category: "Milk", price: 25, quantity: 15 };
+
+  store.addSweet(sweet1);
+  store.addSweet(sweet2);
+
+  store.deleteSweet(1);
+
+  const sweets = useSweetStore.getState().sweets;
+  expect(sweets).toHaveLength(1);
+  expect(sweets[0].id).toBe(2);
+});
 });
