@@ -41,6 +41,19 @@ deleteSweet: (id) => {
     sweets: state.sweets.filter((sweet) => sweet.id !== id),
   }));
 },
+restockSweet: (id, amount) => {
+  const sweetToRestock = get().sweets.find((sweet) => sweet.id === id);
+  if (!sweetToRestock) throw new Error("Sweet not found");
+  if (amount <= 0) throw new Error("Invalid restock amount");
+
+  set((state) => ({
+    sweets: state.sweets.map((sweet) =>
+      sweet.id === id
+        ? { ...sweet, quantity: sweet.quantity + amount }
+        : sweet
+    ),
+  }));
+},
   reset: () => set({ sweets: [] }),
 }));
 

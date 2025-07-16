@@ -170,8 +170,9 @@ test("can delete all sweets one by one", () => {
     store.addSweet(sweet);
     store.restockSweet(7, 5);
 
-    const updatedSweet = store.sweets.find((s) => s.id === 7);
+    const updatedSweet = useSweetStore.getState().sweets.find((sweet) => sweet.id === 7);
+
     expect(updatedSweet.quantity).toBe(15);
   });
-  
+
 });
