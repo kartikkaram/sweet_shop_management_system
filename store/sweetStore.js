@@ -20,7 +20,7 @@ addSweet: (sweet) => {
   updateSweet: (id, updates) => {
   set((state) => ({
     sweets: state.sweets.map((sweet) =>
-      sweet.id === id ? { ...sweet, ...updates } : s
+      sweet.id === id ? { ...sweet, ...updates } : sweet
     ),
   }));
 },
