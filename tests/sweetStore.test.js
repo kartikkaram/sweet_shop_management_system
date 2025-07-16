@@ -120,4 +120,11 @@ test("deletes a sweet by ID", () => {
   const sweets = useSweetStore.getState().sweets;
   expect(sweets.find((sweet) => sweet.id === 10)).toBeUndefined();
 });
+test("throws error when trying to delete a non-existent sweet", () => {
+  const store = useSweetStore.getState();
+
+  expect(() => store.deleteSweet(999))
+    .toThrow("Sweet not found");
+});
+
 });
