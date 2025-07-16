@@ -156,4 +156,22 @@ test("can delete all sweets one by one", () => {
   const sweets = useSweetStore.getState().sweets;
   expect(sweets).toHaveLength(0);
 });
+ test("restocks a sweet and increases quantity", () => {
+    const store = useSweetStore.getState();
+
+    const sweet = {
+      id: 7,
+      name: "Motichoor Laddu",
+      category: "Fried",
+      price: 15,
+      quantity: 10,
+    };
+
+    store.addSweet(sweet);
+    store.restockSweet(7, 5);
+
+    const updatedSweet = store.sweets.find((s) => s.id === 7);
+    expect(updatedSweet.quantity).toBe(15);
+  });
+  
 });
