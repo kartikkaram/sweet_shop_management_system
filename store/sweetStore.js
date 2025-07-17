@@ -1,14 +1,24 @@
 import { create } from "zustand";
 
+
+
+const validateSweet = (sweet) => {
+  const { id, name, category, price, quantity } = sweet;
+
+  if (typeof id !== "number") throw new Error("ID must be a number");
+  if (typeof name !== "string" || !name.trim()) throw new Error("Name is required");
+  if (typeof category !== "string" || !category.trim()) throw new Error("Category is required");
+  if (typeof price !== "number" || price < 0) throw new Error("Price must be a non-negative number");
+  if (typeof quantity !== "number" || quantity < 0) throw new Error("Quantity must be a non-negative number");
+};
+
 const useSweetStore = create((set, get) => ({
   sweets: [],
 
   addSweet: (newSweet) => {
     const { id, name, category, price, quantity } = newSweet;
+    validateSweet(newSweet)
 
-    if (!id || !name || !category || price == null || quantity == null) {
-      throw new Error("Missing required fields");
-    }
 
     const currentSweets = get().sweets;
     const isDuplicate = currentSweets.some((sweet) => sweet.id === id);
@@ -26,6 +36,9 @@ const useSweetStore = create((set, get) => ({
     if (!sweetExists) {
       throw new Error("Sweet not found");
     }
+     if ("quantity" in updates && updates.quantity < 0) {
+    throw new Error("Quantity cannot be negative");
+  }
 
     set((state) => ({
       sweets: state.sweets.map((sweet) =>
