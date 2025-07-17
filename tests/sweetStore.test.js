@@ -215,6 +215,22 @@ test("throws error when restocking with invalid amount", () => {
   expect(() => store.restockSweet(8, 0)).toThrow("Invalid restock amount");
   expect(() => store.restockSweet(8, -5)).toThrow("Invalid restock amount");
 });
+test("reduces quantity when a sweet is purchased", () => {
+  const store = useSweetStore.getState();
 
+  const sweet = {
+    id: 10,
+    name: "Kaju Katli",
+    category: "Dry Fruit",
+    price: 50,
+    quantity: 20,
+  };
+
+  store.addSweet(sweet);
+  store.purchaseSweet(10, 5);
+
+  const updatedSweet = useSweetStore.getState().sweets.find((sweet) => sweet.id === 10);
+  expect(updatedSweet.quantity).toBe(15);
+});
 
 });
