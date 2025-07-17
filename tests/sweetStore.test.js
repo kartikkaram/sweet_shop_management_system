@@ -299,5 +299,12 @@ test("returns empty array when no sweet matches the search term", () => {
   const results = store.searchSweets("laddu");
   expect(results).toEqual([]);
 });
+test("returns sweets matching the category", () => {
+  const store = useSweetStore.getState();
 
+  store.addSweet({ id: 4, name: "Barfi", category: "Milk-Based", price: 25, quantity: 8 });
+
+  const results = store.searchSweets("milk");
+  expect(results[0].name).toBe("Barfi");
+});
 });
