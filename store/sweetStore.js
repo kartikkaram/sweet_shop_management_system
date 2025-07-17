@@ -81,6 +81,13 @@ purchaseSweet: (id, amount) => {
     ),
   }));
 },
+searchSweets:(searchTerm)=>{
+  const lowercaseSearchTerm=searchTerm.toLowerCase()
+  const searchedSweets=get().sweets.filter((sweet)=>
+    sweet.name.toLowerCase().includes(lowercaseSearchTerm) || sweet.category.toLowerCase().includes(lowercaseSearchTerm)
+    )
+  return searchedSweets
+},
   reset: () => set({ sweets: [] }),
 }));
 
