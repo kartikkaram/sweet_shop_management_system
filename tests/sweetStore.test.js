@@ -232,5 +232,18 @@ test("reduces quantity when a sweet is purchased", () => {
   const updatedSweet = useSweetStore.getState().sweets.find((sweet) => sweet.id === 10);
   expect(updatedSweet.quantity).toBe(15);
 });
+test("throws error when purchasing more than available quantity", () => {
+  const store = useSweetStore.getState();
 
+  const sweet = {
+    id: 11,
+    name: "Gulab Jamun",
+    category: "Milk-Based",
+    price: 30,
+    quantity: 10,
+  };
+
+  store.addSweet(sweet);
+  expect(() => store.purchaseSweet(11, 15)).toThrow("Not enough quantity in stock");
+});
 });
