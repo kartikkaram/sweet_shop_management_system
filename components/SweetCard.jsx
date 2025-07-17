@@ -3,6 +3,7 @@
 import { ShoppingCart, Package, Edit, Trash2 } from 'lucide-react';
 import { DialogBox } from './dialogbox';
 import { Button } from './ui/button';
+import Image from 'next/image';
 
 export default function SweetCard({ sweet, isOwner, onPurchase, onEdit, onDelete, onRestock }) {
   const handlePurchase = (amount) => {
@@ -20,11 +21,14 @@ export default function SweetCard({ sweet, isOwner, onPurchase, onEdit, onDelete
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
       <div className="relative h-48 overflow-hidden">
-        <img
-          src={sweet.imageUrl || 'https://images.pexels.com/photos/1055272/pexels-photo-1055272.jpeg?auto=compress&cs=tinysrgb&w=400'}
-          alt={sweet.name}
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
-        />
+<Image
+  src={sweet.image || 'https://images.pexels.com/photos/1055272/pexels-photo-1055272.jpeg?auto=compress&cs=tinysrgb&w=400'}
+  alt={sweet.name}
+  width={400}
+  height={300}
+  className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+/>
+
         <div className="absolute top-2 right-2">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
             sweet.quantity > 10 ? 'bg-green-100 text-green-800' : 
