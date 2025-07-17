@@ -337,5 +337,16 @@ test("sorts sweets by quantity from low to high", () => {
   const sortedByQuantityLowToHigh = store.sortSweets(sort.QUANTITYLOWTOHIGH);
   expect(sortedByQuantityLowToHigh.map(s => s.id)).toEqual([9, 7, 8]);
 });
+test("sorts sweets by quantity from high to low", () => {
+  const store = useSweetStore.getState();
+
+  store.addSweet({ id: 10, name: "Balushahi", category: "Fried", price: 30, quantity: 4 });
+  store.addSweet({ id: 11, name: "Rabri", category: "Milk-Based", price: 60, quantity: 10 });
+  store.addSweet({ id: 12, name: "Modak", category: "Festive", price: 70, quantity: 5 });
+
+  const sortedByQuantityHighToLow = store.sortSweets(sort.QUANTITYHIGHTOLOW);
+  expect(sortedByQuantityHighToLow.map(s => s.id)).toEqual([11, 12, 10]);
+});
+
 
 });
