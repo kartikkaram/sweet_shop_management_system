@@ -1,6 +1,5 @@
 import { create } from "zustand";
-
-
+import {persist} from "zustand/middleware"
 
 const validateSweet = (sweet) => {
   const { id, name, category, price, quantity } = sweet;
@@ -19,98 +18,108 @@ export const sort= {
   QUANTITYHIGHTOLOW:"QUANTITYHIGHTOLOW",
 }
 
-const useSweetStore = create((set, get) => ({
-  sweets: [],
-
-  addSweet: (newSweet) => {
-    const { id } = newSweet;
-    validateSweet(newSweet)
 
 
-    const currentSweets = get().sweets;
-    const isDuplicate = currentSweets.some((sweet) => sweet.id === id);
-    if (isDuplicate) {
-      throw new Error("Sweet with this ID already exists");
+const useSweetStore = create(
+  persist(
+    (set, get) => ({
+      sweets: [],
+
+      addSweet: (newSweet) => {
+        const { id } = newSweet
+        validateSweet(newSweet)
+
+        const currentSweets = get().sweets
+        const isDuplicate = currentSweets.some((sweet) => sweet.id === id)
+        if (isDuplicate) {
+          throw new Error("Sweet with this ID already exists")
+        }
+
+        set((state) => ({
+          sweets: [...state.sweets, newSweet],
+        }))
+      },
+
+      updateSweet: (id, updates) => {
+        const sweetExists = get().sweets.some((sweet) => sweet.id === id)
+        if (!sweetExists) throw new Error("Sweet not found")
+        if ("quantity" in updates && updates.quantity < 0) {
+          throw new Error("Quantity cannot be negative")
+        }
+
+        set((state) => ({
+          sweets: state.sweets.map((sweet) =>
+            sweet.id === id ? { ...sweet, ...updates } : sweet
+          ),
+        }))
+      },
+
+      deleteSweet: (id) => {
+        const currentSweets = get().sweets
+        const sweetExists = currentSweets.some((sweet) => sweet.id === id)
+        if (!sweetExists) throw new Error("Sweet not found")
+        set((state) => ({
+          sweets: state.sweets.filter((sweet) => sweet.id !== id),
+        }))
+      },
+
+      restockSweet: (id, amount) => {
+        const sweetToRestock = get().sweets.find((sweet) => sweet.id === id)
+        if (!sweetToRestock) throw new Error("Sweet not found")
+        if (amount <= 0) throw new Error("Invalid restock amount")
+
+        set((state) => ({
+          sweets: state.sweets.map((sweet) =>
+            sweet.id === id
+              ? { ...sweet, quantity: sweet.quantity + amount }
+              : sweet
+          ),
+        }))
+      },
+
+      purchaseSweet: (id, amount) => {
+        const currentSweet = get().sweets.find((sweet) => sweet.id === id)
+        if (!currentSweet) throw new Error("Sweet not found")
+        if (amount <= 0) throw new Error("Invalid purchase amount")
+        if (amount > currentSweet.quantity) throw new Error("Not enough quantity in stock")
+
+        set((state) => ({
+          sweets: state.sweets.map((sweet) =>
+            sweet.id === id
+              ? { ...sweet, quantity: sweet.quantity - amount }
+              : sweet
+          ),
+        }))
+      },
+
+      searchSweets: (searchTerm) => {
+        const lowercaseSearchTerm = searchTerm.toLowerCase()
+        return get().sweets.filter((sweet) =>
+          sweet.name.toLowerCase().includes(lowercaseSearchTerm) ||
+          sweet.category.toLowerCase().includes(lowercaseSearchTerm)
+        )
+      },
+
+      sortSweets: (sortCondition) => {
+        const sweets = [...get().sweets]
+        if (sortCondition === sort.PRICELOWTOHIGH) {
+          return sweets.sort((a, b) => a.price - b.price)
+        } else if (sortCondition === sort.PRICEHIGHTOLOW) {
+          return sweets.sort((a, b) => b.price - a.price)
+        } else if (sortCondition === sort.QUANTITYLOWTOHIGH) {
+          return sweets.sort((a, b) => a.quantity - b.quantity)
+        } else {
+          return sweets.sort((a, b) => b.quantity - a.quantity)
+        }
+      },
+
+      reset: () => set({ sweets: [] }),
+    }),
+    {
+      name: 'sweet-storage', // key in localStorage
+      partialize: (state) => ({ sweets: state.sweets }), // persist only sweets
     }
+  )
+)
 
-    set((state) => ({
-      sweets: [...state.sweets, newSweet],
-    }));
-  },
-
-  updateSweet: (id, updates) => {
-    const sweetExists = get().sweets.some((sweet) => sweet.id === id);
-    if (!sweetExists) {
-      throw new Error("Sweet not found");
-    }
-     if ("quantity" in updates && updates.quantity < 0) {
-    throw new Error("Quantity cannot be negative");
-  }
-
-    set((state) => ({
-      sweets: state.sweets.map((sweet) =>
-        sweet.id === id ? { ...sweet, ...updates } : sweet
-      ),
-    }));
-  },
-deleteSweet: (id) => {
-  const currentSweets = get().sweets;
-  const sweetExists = currentSweets.some((sweet) => sweet.id === id);
-  if (!sweetExists) throw new Error("Sweet not found");
-  set((state) => ({
-    sweets: state.sweets.filter((sweet) => sweet.id !== id),
-  }));
-},
-restockSweet: (id, amount) => {
-  const sweetToRestock = get().sweets.find((sweet) => sweet.id === id);
-  if (!sweetToRestock) throw new Error("Sweet not found");
-  if (amount <= 0) throw new Error("Invalid restock amount");
-
-  set((state) => ({
-    sweets: state.sweets.map((sweet) =>
-      sweet.id === id
-        ? { ...sweet, quantity: sweet.quantity + amount }
-        : sweet
-    ),
-  }));
-},
-purchaseSweet: (id, amount) => {
-  const currentSweet = get().sweets.find((sweet) => sweet.id === id);
-  if (!currentSweet) throw new Error("Sweet not found");
-  if (amount <= 0) throw new Error("Invalid purchase amount");
-  if (amount > currentSweet.quantity) throw new Error("Not enough quantity in stock");
-
-  set((state) => ({
-    sweets: state.sweets.map((sweet) =>
-      sweet.id === id
-        ? { ...sweet, quantity: sweet.quantity - amount }
-        : sweet
-    ),
-  }));
-},
-searchSweets:(searchTerm)=>{
-  const lowercaseSearchTerm=searchTerm.toLowerCase()
-  const searchedSweets=get().sweets.filter((sweet)=>
-    sweet.name.toLowerCase().includes(lowercaseSearchTerm) || sweet.category.toLowerCase().includes(lowercaseSearchTerm)
-    )
-  return searchedSweets
-},
-sortSweets:(sortCondition)=>{
-  const sweets=[...get().sweets]
-  if(sortCondition===sort.PRICELOWTOHIGH){
-    return sweets.sort((sweet1, sweet2)=>sweet1.price - sweet2.price)
-  }
- else if(sortCondition===sort.PRICEHIGHTOLOW){
-    return sweets.sort((sweet1, sweet2)=>sweet2.price - sweet1.price)
- }
- else if(sortCondition===sort.QUANTITYLOWTOHIGH){
-    return sweets.sort((sweet1, sweet2)=>sweet1.quantity - sweet2.quantity)
- }
-  else{
-      return sweets.sort((sweet1, sweet2)=>sweet2.quantity - sweet1.quantity)
-  }
-},
-  reset: () => set({ sweets: [] }),
-}));
-
-export default useSweetStore;
+export default useSweetStore
