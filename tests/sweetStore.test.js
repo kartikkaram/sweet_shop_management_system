@@ -282,5 +282,13 @@ test("returns sweets matching the search term (case-insensitive, partial match)"
     { id: 2, name: "Gulab Jamun", category: "Milk-Based", price: 30, quantity: 15 },
   ]);
 });
+test("returns multiple sweets that match the search term", () => {
+  const store = useSweetStore.getState();
 
+  store.addSweet({ id: 1, name: "Kaju Katli", category: "Dry Fruit", price: 50, quantity: 10 });
+  store.addSweet({ id: 2, name: "Kaju Roll", category: "Dry Fruit", price: 60, quantity: 5 });
+
+  const results = store.searchSweets("kaju");
+  expect(results.length).toBe(2);
+});
 });
