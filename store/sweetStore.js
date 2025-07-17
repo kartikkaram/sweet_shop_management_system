@@ -12,6 +12,13 @@ const validateSweet = (sweet) => {
   if (typeof quantity !== "number" || quantity < 0) throw new Error("Quantity must be a non-negative number");
 };
 
+export const sort= {
+  PRICELOWTOHIGH:"PRICELOWTOHIGH",
+  PRICEHIGHTOLOW:"PRICEHIGHTOLOW",
+  QUANTITYLOWTOHIGH:"QUANTITYLOWTOHIGH",
+  QUANTITYHIGHTOLOW:"QUANTITYHIGHTOLOW",
+}
+
 const useSweetStore = create((set, get) => ({
   sweets: [],
 
@@ -87,6 +94,21 @@ searchSweets:(searchTerm)=>{
     sweet.name.toLowerCase().includes(lowercaseSearchTerm) || sweet.category.toLowerCase().includes(lowercaseSearchTerm)
     )
   return searchedSweets
+},
+sortSweets:(sortCondition)=>{
+  const sweets=[...get().sweets]
+  if(sortCondition===sort.PRICELOWTOHIGH){
+    return sweets.sort((sweet1, sweet2)=>sweet1.price - sweet2.price)
+  }
+ else if(sortCondition===sort.PRICEHIGHTOLOW){
+    return sweets.sort((sweet1, sweet2)=>sweet2.price - sweet1.price)
+ }
+ else if(sortCondition===sort.QUANTITYLOWTOHIGH){
+    return sweets.sort((sweet1, sweet2)=>sweet1.quantity - sweet2.quantity)
+ }
+  else{
+      return sweets.sort((sweet1, sweet2)=>sweet2.quantity - sweet1.quantity)
+  }
 },
   reset: () => set({ sweets: [] }),
 }));
