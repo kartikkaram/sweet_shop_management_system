@@ -22,7 +22,7 @@ export function DialogBox({
     color,
     handleSubmit,
     defaultValue,
-    Icon=""
+    Icon,
 }) {
     const [input, setInput]=useState(defaultValue)
     const closRef=useRef(null)
@@ -36,6 +36,7 @@ export function DialogBox({
         e.preventDefault();
         handleSubmit(input)
         closRef.current.click()
+        setInput(defaultValue)
         }}>
           <DialogHeader>
             <DialogTitle>{label}</DialogTitle>
@@ -47,6 +48,8 @@ export function DialogBox({
             <div className="grid gap-3">
               <Label htmlFor="name-1">Name</Label>
               {sweet.name}
+               <Label htmlFor="name-1">Total</Label>
+              ₹ {sweet.price*input} 
             </div>
             <div className="grid gap-3">
             <Input
