@@ -266,4 +266,21 @@ test("throws error when purchasing a sweet that does not exist", () => {
 
   expect(() => store.purchaseSweet(999, 2)).toThrow("Sweet not found");
 });
+test("returns sweets matching the search term (case-insensitive, partial match)", () => {
+  const store = useSweetStore.getState();
+
+  const sweets = [
+    { id: 1, name: "Kaju Katli", category: "Dry Fruit", price: 50, quantity: 10 },
+    { id: 2, name: "Gulab Jamun", category: "Milk-Based", price: 30, quantity: 15 },
+    { id: 3, name: "Rasgulla", category: "Milk-Based", price: 25, quantity: 12 },
+  ];
+
+  sweets.forEach((sweet) => store.addSweet(sweet));
+
+  const results = store.searchSweets("jam");
+  expect(results).toEqual([
+    { id: 2, name: "Gulab Jamun", category: "Milk-Based", price: 30, quantity: 15 },
+  ]);
+});
+
 });
