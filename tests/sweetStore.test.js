@@ -1,4 +1,4 @@
-import useSweetStore from "../store/sweetStore";
+import useSweetStore, { sort } from "../store/sweetStore";
 
 
 describe("Sweet Store", () => {
@@ -306,5 +306,15 @@ test("returns sweets matching the category", () => {
 
   const results = store.searchSweets("milk");
   expect(results[0].name).toBe("Barfi");
+});
+test("sorts sweets by price from low to high", () => {
+  const store = useSweetStore.getState();
+
+  store.addSweet({ id: 1, name: "Ladoo", category: "Gram", price: 40, quantity: 10 });
+  store.addSweet({ id: 2, name: "Barfi", category: "Milk-Based", price: 20, quantity: 5 });
+  store.addSweet({ id: 3, name: "Kaju Roll", category: "Dry Fruit", price: 60, quantity: 8 });
+
+  const sortedByPriceLowToHigh = store.sortSweets(sort.PRICELOWTOHIGH);
+  expect(sortedByPriceLowToHigh.map(sweet => sweet.id)).toEqual([2, 1, 3]);
 });
 });
