@@ -5,7 +5,7 @@ import useSweetStore from '../store/sweetStore';
 import SweetCard from './SweetCard';
 import SweetForm from './SweetForm';
 import SearchAndSort from './SearchAndSort';
-import { Store, Plus, AlertCircle, TrendingUp, Package, DollarSign } from 'lucide-react';
+import { Store, Plus, AlertCircle, TrendingUp, Package, DollarSign, IndianRupee } from 'lucide-react';
 
 export default function OwnerSection() {
   const { sweets, addSweet, updateSweet, deleteSweet, restockSweet, searchSweets, sortSweets } = useSweetStore();
@@ -124,7 +124,7 @@ export default function OwnerSection() {
               <p className="text-green-100 text-sm">Inventory Value</p>
               <p className="text-2xl font-bold">₹ {totalValue.toFixed(2)}</p>
             </div>
-            <DollarSign className="text-green-200" size={32} />
+            <IndianRupee className="text-green-200" size={32} />
           </div>
         </div>
         
