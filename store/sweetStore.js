@@ -67,6 +67,20 @@ restockSweet: (id, amount) => {
     ),
   }));
 },
+purchaseSweet: (id, amount) => {
+  const currentSweet = get().sweets.find((sweet) => sweet.id === id);
+  if (!currentSweet) throw new Error("Sweet not found");
+  if (amount <= 0) throw new Error("Invalid purchase amount");
+  if (amount > currentSweet.quantity) throw new Error("Not enough quantity in stock");
+
+  set((state) => ({
+    sweets: state.sweets.map((sweet) =>
+      sweet.id === id
+        ? { ...sweet, quantity: sweet.quantity - amount }
+        : sweet
+    ),
+  }));
+},
   reset: () => set({ sweets: [] }),
 }));
 
