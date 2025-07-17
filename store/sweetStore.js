@@ -1,3 +1,4 @@
+import { sampleSweets } from "../data/sampleSweet.js";
 import { create } from "zustand";
 import {persist} from "zustand/middleware"
 
@@ -23,7 +24,9 @@ export const sort= {
 const useSweetStore = create(
   persist(
     (set, get) => ({
-      sweets: [],
+      sweets: [
+        ...sampleSweets
+      ],
 
       addSweet: (newSweet) => {
         const { id } = newSweet
