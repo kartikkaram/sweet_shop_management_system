@@ -122,7 +122,7 @@ export default function OwnerSection() {
           <div className="flex items-center justify-between">
             <div>
               <p className="text-green-100 text-sm">Inventory Value</p>
-              <p className="text-2xl font-bold">${totalValue.toFixed(2)}</p>
+              <p className="text-2xl font-bold">₹ {totalValue.toFixed(2)}</p>
             </div>
             <DollarSign className="text-green-200" size={32} />
           </div>
