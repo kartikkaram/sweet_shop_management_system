@@ -39,7 +39,7 @@ export default function SweetCard({ sweet, isOwner, onPurchase, onEdit, onDelete
       <div className="p-4">
         <div className="flex justify-between items-start mb-2">
           <h3 className="text-lg font-bold text-gray-800 truncate">{sweet.name}</h3>
-          <span className="text-xl font-bold text-pink-600">${sweet.price.toFixed(2)}</span>
+          <span className="text-xl font-bold text-pink-600">₹ {sweet.price.toFixed(2)}</span>
         </div>
         
         <p className="text-sm text-gray-600 mb-2 capitalize">{sweet.category}</p>
