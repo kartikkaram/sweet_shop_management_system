@@ -1,7 +1,7 @@
 import useSweetStore from "../../store/sweetStore";
 
 
-describe("Sweet Store", () => {
+describe("Purchase sweets", () => {
   beforeEach(() => {
     useSweetStore.getState().reset();
   });

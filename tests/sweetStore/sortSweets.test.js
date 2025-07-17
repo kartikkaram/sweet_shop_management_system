@@ -1,7 +1,7 @@
 import useSweetStore, { sort } from "../../store/sweetStore";
 
 
-describe("Sweet Store", () => {
+describe("Sort sweets", () => {
   beforeEach(() => {
     useSweetStore.getState().reset();
   });
