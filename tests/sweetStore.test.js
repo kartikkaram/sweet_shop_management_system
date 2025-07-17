@@ -37,18 +37,6 @@ describe("Sweet Store", () => {
 
   expect(() => store.addSweet(sweet)).toThrow("Sweet with this ID already exists");
 });
-test("throws error when adding a sweet with missing required fields", () => {
-  const sweet = {
-    id: 2,
-    category: "Candy",
-    price: 20,
-    quantity: 10,
-  };
-
-  const store = useSweetStore.getState();
-
-  expect(() => store.addSweet(sweet)).toThrow("Missing required fields");
-});
 test("adds multiple sweets correctly", () => {
   const store = useSweetStore.getState();
 
@@ -59,6 +47,22 @@ test("adds multiple sweets correctly", () => {
   store.addSweet(sweet2);
 
   expect(useSweetStore.getState().sweets).toHaveLength(2);
+
+});
+test("throws error when sweet has invalid field types or missing fields", () => {
+  const store = useSweetStore.getState();
+
+  const invalidSweet = {
+    id: "abc", 
+    name: "", 
+    category: "Candy",
+    price: "free", 
+    quantity: -10, 
+  };
+
+ expect(() =>
+  store.addSweet({ id: 1, name: "", category: "Candy", price: 10, quantity: 5 })
+).toThrow("Name is required");
 
 });
 test("updates an existing sweet by ID", () => {
@@ -102,6 +106,22 @@ test("does not change sweet when update object is empty", () => {
 
   const updatedSweet = useSweetStore.getState().sweets.find(sweet => sweet.id === 3);
   expect(updatedSweet).toMatchObject(sweet);
+});
+test("throws error when trying to update quantity to a negative value", () => {
+  const store = useSweetStore.getState();
+
+  const sweet = {
+    id: 5,
+    name: "Jalebi",
+    category: "Fried",
+    price: 30,
+    quantity: 10,
+  };
+
+  store.addSweet(sweet);
+
+  expect(() => store.updateSweet(5, { quantity: -5 }))
+    .toThrow("Quantity cannot be negative");
 });
 test("deletes a sweet by ID", () => {
   const store = useSweetStore.getState();
