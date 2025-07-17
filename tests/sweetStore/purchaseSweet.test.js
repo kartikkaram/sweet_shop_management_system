@@ -12,6 +12,7 @@ describe("Purchase sweets", () => {
     id: 10,
     name: "Kaju Katli",
     category: "Dry Fruit",
+     image:"",
     price: 50,
     quantity: 20,
   };
@@ -29,6 +30,7 @@ test("throws error when purchasing more than available quantity", () => {
     id: 11,
     name: "Gulab Jamun",
     category: "Milk-Based",
+     image:"",
     price: 30,
     quantity: 10,
   };
@@ -43,6 +45,7 @@ test("throws error when purchasing with invalid amount", () => {
     id: 12,
     name: "Rasgulla",
     category: "Milk-Based",
+     image:"",
     price: 20,
     quantity: 10,
   };

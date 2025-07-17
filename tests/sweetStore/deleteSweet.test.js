@@ -12,6 +12,7 @@ test("deletes a sweet by ID", () => {
     id: 10,
     name: "Soan Papdi",
     category: "Flaky",
+     image:"",
     price: 20,
     quantity: 15,
   };
@@ -31,8 +32,8 @@ test("throws error when trying to delete a non-existent sweet", () => {
 test("deletes the correct sweet when multiple sweets are present", () => {
   const store = useSweetStore.getState();
 
-  const sweet1 = { id: 1, name: "Barfi", category: "Milk", price: 30, quantity: 10 };
-  const sweet2 = { id: 2, name: "Peda", category: "Milk", price: 25, quantity: 15 };
+  const sweet1 = { id: 1, name: "Barfi", category: "Milk", image:"", price: 30, quantity: 10 };
+  const sweet2 = { id: 2, name: "Peda", category: "Milk", image:"", price: 25, quantity: 15 };
 
   store.addSweet(sweet1);
   store.addSweet(sweet2);
@@ -46,8 +47,8 @@ test("deletes the correct sweet when multiple sweets are present", () => {
 test("can delete all sweets one by one", () => {
   const store = useSweetStore.getState();
 
-  const sweet1 = { id: 1, name: "Kalakand", category: "Milk", price: 40, quantity: 12 };
-  const sweet2 = { id: 2, name: "Imarti", category: "Fried", price: 20, quantity: 8 };
+  const sweet1 = { id: 1, name: "Kalakand", category: "Milk", image:"", price: 40, quantity: 12 };
+  const sweet2 = { id: 2, name: "Imarti", category: "Fried", image:"", price: 20, quantity: 8 };
 
   store.addSweet(sweet1);
   store.addSweet(sweet2);

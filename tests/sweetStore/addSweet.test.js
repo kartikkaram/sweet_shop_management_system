@@ -10,6 +10,7 @@ describe("Add sweets", () => {
       id: 1,
       name: "Kaju Katli",
       category: "Nut-Based",
+      image:"",
       price: 50,
       quantity: 20,
     };
@@ -26,6 +27,7 @@ describe("Add sweets", () => {
     id: 1,
     name: "Kaju Katli",
     category: "Nut-Based",
+     image:"",
     price: 50,
     quantity: 20,
   };
@@ -55,6 +57,7 @@ test("throws error when sweet has invalid field types or missing fields", () => 
     id: "abc", 
     name: "", 
     category: "Candy",
+     image:"",
     price: "free", 
     quantity: -10, 
   };

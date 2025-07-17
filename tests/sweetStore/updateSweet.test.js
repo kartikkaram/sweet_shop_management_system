@@ -12,6 +12,7 @@ describe("Update sweets", () => {
     id: 1,
     name: "Kaju Katli",
     category: "Nut-Based",
+     image:"",
     price: 50,
     quantity: 20,
   };
@@ -37,6 +38,7 @@ test("does not change sweet when update object is empty", () => {
     id: 3,
     name: "Ladoo",
     category: "Gram-Based",
+     image:"",
     price: 25,
     quantity: 10,
   };
@@ -54,6 +56,7 @@ test("throws error when trying to update quantity to a negative value", () => {
     id: 5,
     name: "Jalebi",
     category: "Fried",
+     image:"",
     price: 30,
     quantity: 10,
   };

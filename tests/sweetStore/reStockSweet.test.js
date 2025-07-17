@@ -12,6 +12,7 @@ test("restocks a sweet and increases quantity", () => {
       id: 7,
       name: "Motichoor Laddu",
       category: "Fried",
+       image:"",
       price: 15,
       quantity: 10,
     };
@@ -35,6 +36,7 @@ test("throws error when restocking with invalid amount", () => {
     id: 8,
     name: "Cham Cham",
     category: "Milk-Based",
+     image:"",
     price: 25,
     quantity: 12,
   };
