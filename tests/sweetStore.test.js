@@ -291,4 +291,13 @@ test("returns multiple sweets that match the search term", () => {
   const results = store.searchSweets("kaju");
   expect(results.length).toBe(2);
 });
+test("returns empty array when no sweet matches the search term", () => {
+  const store = useSweetStore.getState();
+
+  store.addSweet({ id: 3, name: "Rasgulla", category: "Milk-Based", price: 20, quantity: 12 });
+
+  const results = store.searchSweets("laddu");
+  expect(results).toEqual([]);
+});
+
 });
