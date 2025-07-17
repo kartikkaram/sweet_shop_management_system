@@ -23,7 +23,7 @@ const useSweetStore = create((set, get) => ({
   sweets: [],
 
   addSweet: (newSweet) => {
-    const { id, name, category, price, quantity } = newSweet;
+    const { id } = newSweet;
     validateSweet(newSweet)
 
 
