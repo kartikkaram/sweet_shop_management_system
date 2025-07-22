@@ -1,4 +1,5 @@
-# 🍬 Sweet Shop Management System
+# 🍬 Sweet Shop Management System [![View](https://img.shields.io/badge/View-App-blue?style=for-the-badge)](https://sweet-shop-management-system-eight.vercel.app/)
+
 
 A lightweight and interactive sweet shop management system built using Next.js and Zustand for state management. This app allows you to efficiently manage sweets with features like adding, deleting, purchasing, restocking, and sorting sweets.
 
